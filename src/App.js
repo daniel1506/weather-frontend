@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { React, useContext } from "react";
+import AuthContext from "./store/auth-context";
+import Auth from "./Auth";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Box, CssBaseline } from "@mui/material";
+import Homepage from "./pages/Homepage/Homepage";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import PrefContext from "./store/preference-context";
 function App() {
+  const prefCtx = useContext(PrefContext);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={prefCtx.theme}>
+      <CssBaseline />
+      <Router>
+        <Routes>
+          <Route path="/homepage" element={<Homepage />}></Route>
+          <Route path="*" element={<Auth />}></Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
