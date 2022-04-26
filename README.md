@@ -1,5 +1,5 @@
 # 用npm install會幫你裝好啲dependencies，之後用npm start，之後可以開工
-# 去/homepage，之後禁navbar會去到你開工嘅地方
+# 去/homepage可以開到啲page嚟睇
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
