@@ -1,5 +1,5 @@
 //@ts-check
-import { Button, ButtonGroup, Slide, TextField, Grid, Stack, FormControl, Alert, Grow } from "@mui/material";
+import { Button, ButtonGroup, Slide, TextField, Grid, Stack, FormControl, Alert, Grow, Box } from "@mui/material";
 import VerticalFlex from "./layoutLib/VerticalFlex";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -94,7 +94,7 @@ function Logreg() {
       });
   };
   return (
-    <>
+    <Box display="flex" flexDirection={"column"} alignItems={"center"}>
       <ButtonGroup
         variant="contained"
         aria-label="outlined primary button group"
@@ -156,7 +156,7 @@ function Logreg() {
           )}
         </form>
       </Slide>
-    </>
+    </Box>
   );
 }
 export default Logreg;

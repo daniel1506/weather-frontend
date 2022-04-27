@@ -12,7 +12,14 @@ function Auth() {
     }, 500);
   }, []);
   return (
-    <Box display="flex" minHeight={"100vh"} flexDirection="column" alignItems="center" justifyContent="center">
+    <Box
+      display="flex"
+      minHeight={"100vh"}
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      gap="10px"
+    >
       <Zoom in={true} timeout={1000}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width={"270px"} height={"240px"}>
           <path
@@ -30,7 +37,7 @@ function Auth() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3">Weather With Me</Typography>
+          <Typography variant="h3">Weathering With Me</Typography>
         </div>
       </Fade>
       <Logreg />
