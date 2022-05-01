@@ -147,7 +147,7 @@ export default function Navbar(props) {
           </ListItem>
           <Divider sx={{ my: 1 }} />
           <Typography variant="caption" sx={{ ml: 2, textTransform: "uppercase", py: 1, display: "block" }}>
-            Browse Events
+            Browse Locations
           </Typography>
           <ListItem
             button
@@ -354,13 +354,15 @@ export default function Navbar(props) {
           <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" }, ml: "12px" }}>
             Weather With Me
           </Typography>
-          {(generalCtx.viewSelected === "gridView" || generalCtx.viewSelected === "" || props.admin === true) && (
+          {(generalCtx.viewSelected === "tableView" ||
+            generalCtx.viewSelected === "" ||
+            generalCtx.viewSelected === "adminView") && (
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder={props.admin ? "Search username" : "Search event"}
+                placeholder={generalCtx.viewSelected === "adminView" ? "Search user" : "Search location"}
                 inputProps={{ "aria-label": "search" }}
                 onChange={(e) => {
                   props.handleSearch(e.target.value);

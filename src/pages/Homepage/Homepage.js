@@ -7,7 +7,7 @@ import GeneralContext from "../../store/general-context.js";
 import TableView from "./TableView.js";
 import MapView from "./MapView.js";
 import FavoriteView from "./FavoriteView.js";
-import AdminView from "./AdminView.js";
+import AdminView from "./AdminView/AdminView.js";
 function Homepage() {
   const generalCtx = useContext(GeneralContext);
   return (
