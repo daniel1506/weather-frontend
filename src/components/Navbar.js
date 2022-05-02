@@ -28,7 +28,6 @@ import FriendShowCase from "./FriendShowCase";
 import FriendList from "./FriendList";
 import { SwipeableDrawer, List, ListItem, ListItemIcon, ListItemText, Divider } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { set } from "date-fns";
 import LogoutIcon from "@mui/icons-material/Logout";
 import get from "../lib/get";
 import AddFriendField from "./AddFriendField";
