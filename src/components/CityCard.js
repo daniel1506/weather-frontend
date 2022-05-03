@@ -26,6 +26,7 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import CommentIcon from "@mui/icons-material/Comment";
 import CommentSection from "./CommentSection.js";
 import put from "../lib/put.js";
+import deleteReq from "../lib/delete.js";
 //import Menu from '@mui/material/Menu';
 //import MenuItem from '@mui/material/MenuItem';
 import EventCardSettingBtn from "./EventCardSettingBtn.js";
@@ -35,7 +36,7 @@ import { DirectionsTransitFilledTwoTone } from "@mui/icons-material";
 import Profile from "./Profile.js";
 import { useContext } from "react";
 import { Grow } from "@mui/material";
-import { categoryPhotos } from "../lib/sharedResource";
+import { cityPhotos } from "../lib/sharedResource";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -47,23 +48,13 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-function SwitchCardIMG(category, url) {
-  if (url != null) {
-    return url;
-  }
-  switch (category) {
-    case "dining":
-      return categoryPhotos.dining;
-    case "leisure":
-      return categoryPhotos.leisure;
-    case "sports":
-      return categoryPhotos.sports;
-    case "study":
-      return categoryPhotos.study;
-    case "work":
-      return categoryPhotos.work;
-    case "others":
-      return categoryPhotos.others;
+function SwitchCardIMG(city) {
+  //if (url != null) {
+  //  return url;
+  //}
+  switch (city) {
+    case "Bangkok":
+      return cityPhotos.bangkok;
     default:
       return "others";
   }
@@ -75,10 +66,11 @@ const eventDetailItemStyle = (theme) => ({
   color: theme.palette.text.secondary,
 });
 
-export default function EventCard(props) {
+export default function CityCard(props) {
   const generalCtx = useContext(GeneralContext);
   const prefCtx = useContext(PrefContext);
-  const isHost = localStorage.getItem("id") == props.hostId;
+  //const isHost = localStorage.getItem("id") == props.hostId;
+  const isHost = false;
   const [expanded, setExpanded] = React.useState(false);
   const [showProfile, setShowProfile] = React.useState(false);
   const handleExpandClick = () => {
@@ -87,14 +79,14 @@ export default function EventCard(props) {
 
   function likeCityHandler() {
     if (!props.isLiked) {
-      put("https://rfriend.herokuapp.com/api/user/save", {
-        event_id: props.eventId,
+      put("https://weathering-with-me-g12.herokuapp.com/location/" + props.city + "/favourite", {
+        
       }).then(() => {
         generalCtx.handleEventModified();
       });
     } else {
-      put("https://rfriend.herokuapp.com/api/user/unsave", {
-        event_id: props.eventId,
+      deleteReq("https://weathering-with-me-g12.herokuapp.com/location/" + props.city + "/favourite", {
+        
       }).then(() => {
         generalCtx.handleEventModified();
       });
@@ -109,13 +101,13 @@ export default function EventCard(props) {
               <Avatar
                 sx={{ bgcolor: red[500] }}
                 aria-label="avatar"
-                src={props.host.profileUrl}
+                //src={props.host.profileUrl}
                 onClick={() => {
                   setShowProfile(true);
                 }}
                 style={{ cursor: "pointer" }}
               >
-                {props.host.name}
+                {props.weatherInfo.cityName}
               </Avatar>
             }
             action={
@@ -133,14 +125,14 @@ export default function EventCard(props) {
                 <></>
               )
             }
-            title={props.eventName}
+            title={props.weatherInfo.cityName}
             subheader={props.host.name}
             titleTypographyProps={{ fontWeight: "bold", variant: "body1" }}
           />
           <CardMedia
             component="img"
             height="194"
-            image={SwitchCardIMG(props.eventCategory, props.photoUrl)}
+            image={SwitchCardIMG(props.eventCategory)}
             alt="Category Image"
           />
           <CardContent sx={{ pb: 1 }}>

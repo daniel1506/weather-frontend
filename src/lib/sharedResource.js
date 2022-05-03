@@ -7,3 +7,9 @@ export let categoryPhotos = {
     "https://www.china-briefing.com/news/wp-content/uploads/2018/09/China-Brefing-Chinas-New-Gaming-Regulations-What-it-Means-for-Investors.jpg",
   others: "https://sv2109.com/sites/default/files/field/image/bigstock-events-7444309_0.jpg",
 };
+
+export let cityPhotos = {
+  bangkok: "https://a.cdn-hotels.com/gdcs/production172/d459/3af9262b-3d8b-40c6-b61d-e37ae1aa90aa.jpg",
+  hongkong: "https://a.cdn-hotels.com/gdcs/production143/d1528/7b73b3d4-623f-4bee-9cad-7ddf053a40c8.jpg",
+  others: "https://assets.new.siemens.com/siemens/assets/api/uuid:42a792af5f26c8aab58926bced8ab1d2ae64ef7e/width:2000/quality:high/hk14.jpg",
+};
