@@ -9,6 +9,7 @@ import TableView from "./pages/Homepage/TableView";
 import MapView from "./pages/Homepage/MapView";
 import FavoriteView from "./pages/Homepage/FavoriteView";
 import AdminView from "./pages/Homepage/AdminView/AdminView";
+import LocationView from "./pages/LocationView.js";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/mapview" element={<MapView />}></Route>
           <Route path="/favoriteview" element={<FavoriteView />}></Route>
           <Route path="/adminview" element={<AdminView />}></Route>
+          <Route path="/location/:id" element={<LocationView />}></Route>
           <Route path="*" element={<Navigate to="/homepage" />}></Route>
         </Routes>
       </Router>
