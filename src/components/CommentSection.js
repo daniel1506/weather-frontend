@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@mui/material/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { MessageLeft, MessageRight, TextInput } from "./Comment.js";

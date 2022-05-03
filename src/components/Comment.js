@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@mui/material/styles";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
