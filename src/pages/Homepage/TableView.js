@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import CityCard from "../components/CityCard";
-import GeneralContext from "../store/general-context";
-
+import CityCard from "../../components/CityCard";
+import GeneralContext from "../../store/general-context";
+import get from "../../lib/get";
 function TableView() {
-
   const [cityList, setCityList] = React.useState([]);
   const generalCtx = React.useContext(GeneralContext);
 
@@ -15,7 +14,7 @@ function TableView() {
     });
   }, [generalCtx.eventEventModified]);
 
-  return(
+  return (
     <></>
     // <Container>
     //   <Grid container spacing={"20px"}>

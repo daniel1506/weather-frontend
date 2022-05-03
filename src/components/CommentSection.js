@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { MessageLeft, MessageRight, TextInput } from "./Comment.js";
@@ -41,15 +41,28 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function CommentSection(props) {
-  const hasComment = (props.eventComment != null);
+  const hasComment = props.eventComment != null;
   const classes = useStyles();
   return (
     <>
       <Typography sx={{ pt: 2, pb: 1 }}>Comments:</Typography>
-      {hasComment?props.eventComment.map((comment) => {
-          return (<MessageLeft key={comment.id} message={comment.text} timestamp={new Date(comment.createdAt).toString()} photoURL={comment.owner.profileUrl} displayName={comment.owner.name} avatarDisp={true} />)
-      }):<></>}
-      <TextInput eventId={props.eventId}/>
+      {hasComment ? (
+        props.eventComment.map((comment) => {
+          return (
+            <MessageLeft
+              key={comment.id}
+              message={comment.text}
+              timestamp={new Date(comment.createdAt).toString()}
+              photoURL={comment.owner.profileUrl}
+              displayName={comment.owner.name}
+              avatarDisp={true}
+            />
+          );
+        })
+      ) : (
+        <></>
+      )}
+      <TextInput eventId={props.eventId} />
     </>
   );
 }

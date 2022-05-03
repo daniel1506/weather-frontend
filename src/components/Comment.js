@@ -1,5 +1,5 @@
 import React from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from "@mui/material/styles";
 import { styled } from "@mui/material/styles";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
@@ -164,19 +164,19 @@ export const TextInput = (props) => {
   const handleCommentInputOnChange = (event) => {
     setCommentInput(event.target.value);
   };
-  
-  function submitComment(){
-    if(commentInput != null && commentInput != '') {
+
+  function submitComment() {
+    if (commentInput != null && commentInput != "") {
       post("https://rfriend.herokuapp.com/api/user/comment", {
         event_id: props.eventId,
         comment: commentInput,
       }).then(() => {
         generalCtx.handleEventModified();
       });
-    } 
-    setCommentInput('');
+    }
+    setCommentInput("");
   }
-  
+
   return (
     <>
       <FormControl variant="outlined" fullWidth>
