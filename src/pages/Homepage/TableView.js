@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import GeneralContext from "../store/general-context";
 
 function TableView() {
-
   const [cityList, setCityList] = React.useState([]);
   const generalCtx = React.useContext(GeneralContext);
 
