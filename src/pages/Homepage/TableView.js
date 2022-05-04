@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import CityCard from "../components/CityCard";
+//import CityCard from "../components/CityCard";
 import GeneralContext from "../store/general-context";
 
 function TableView() {
@@ -9,42 +9,57 @@ function TableView() {
 
   useEffect(() => {
     console.log("Getting weather info");
-    get("https://rfriend.herokuapp.com/api/user/browse").then((r) => {
+    get("https://weathering-with-me-g12.herokuapp.com/").then((r) => {
       //setCityList();
-      console.log();
+      console.log(r);
     });
   }, [generalCtx.eventEventModified]);
 
-  return(
-    <></>
-    // <Container>
-    //   <Grid container spacing={"20px"}>
-    //     {cityList.map((e, index) => {
-    //       return (
-    //         <Grid key={index} item xs={12} sm={6} md={3}>
-    //           <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-    //             <CityCard
-    //               eventId={e.id}
-    //               eventName={e.name}
-    //               hostId={e.ownerId}
-    //               eventTime={e.startsAt}
-    //               isJoined={e.isEventJoined}
-    //               isLiked={e.isEventLiked}
-    //               photoUrl={e.photoUrl}
-    //               host={e.owner}
-    //               eventLocation={e.location}
-    //               eventCategory={e.category}
-    //               participants={e.participants}
-    //               maxParticipants={e.maxParticipants}
-    //               eventRemark={e.remarks}
-    //               eventComment={e.comments}
-    //             />
-    //           </Box>
-    //         </Grid>
-    //       );
-    //     })}
-    //   </Grid>
-    // </Container>
+  return (
+    <>
+      <InfoTable info={cityList}/>
+    </>
+  );
+}
+
+function InfoTable(props) {
+  return (
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>City</TableCell>
+              <TableCell align="right">Country</TableCell>
+              <TableCell align="right">Temperature&nbsp;(C)</TableCell>
+              <TableCell align="right">Wind Speed&nbsp;(kph)</TableCell>
+              <TableCell align="right">Wind Direction</TableCell>
+              <TableCell align="right">Humidity&nbsp;(%)</TableCell>
+              <TableCell align="right">Precipitation&nbsp;(mm)</TableCell>
+              <TableCell align="right">Visibility&nbsp;(km)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {props.info.city}
+                </TableCell>
+                <TableCell align="right">{props.info.country.temp_c}</TableCell>
+                <TableCell align="right">{props.info.weather.wind_kph}</TableCell>
+                <TableCell align="right">{props.info.weather.wind_dir}</TableCell>
+                <TableCell align="right">{props.info.weather.humidity}</TableCell>
+                <TableCell align="right">{props.info.weather.precip_mm}</TableCell>
+                <TableCell align="right">{props.info.weather.vis_km}</TableCell>             
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
