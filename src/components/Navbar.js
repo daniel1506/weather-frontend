@@ -39,6 +39,7 @@ import PrefContext from "../store/preference-context";
 import MaterialUISwitch from "./MaterialUISwitch";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import { useMatch, useNavigate } from "react-router-dom";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -93,6 +94,11 @@ export default function Navbar(props) {
   const isPageMenuOpen = Boolean(anchorEl2);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [openDrawer, setOpenDrawer] = React.useState(false);
+  const matchHome = useMatch("/homepage");
+  const matchMap = useMatch("/mapview");
+  const matchFavorite = useMatch("/favoriteview");
+  const matchAdmin = useMatch("/adminview");
+  const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -150,9 +156,9 @@ export default function Navbar(props) {
           </Typography>
           <ListItem
             button
-            selected={generalCtx.viewSelected === "tableView" || generalCtx.viewSelected === ""}
+            selected={matchHome}
             onClick={() => {
-              generalCtx.handleChangeView("tableView");
+              navigate("/homepage");
             }}
           >
             <ListItemIcon>
@@ -162,9 +168,9 @@ export default function Navbar(props) {
           </ListItem>
           <ListItem
             button
-            selected={generalCtx.viewSelected === "mapView"}
+            selected={matchMap}
             onClick={() => {
-              generalCtx.handleChangeView("mapView");
+              navigate("/mapview");
             }}
           >
             <ListItemIcon>
@@ -175,9 +181,9 @@ export default function Navbar(props) {
           <Divider sx={{ my: 1 }} />
           <ListItem
             button
-            selected={generalCtx.viewSelected === "favourites"}
+            selected={matchFavorite}
             onClick={() => {
-              generalCtx.handleChangeView("favourites");
+              navigate("/favoriteview");
             }}
           >
             <ListItemIcon>
@@ -188,9 +194,9 @@ export default function Navbar(props) {
           <Divider sx={{ my: 1 }} />
           <ListItem
             button
-            selected={generalCtx.viewSelected === "adminView"}
+            selected={matchAdmin}
             onClick={() => {
-              generalCtx.handleChangeView("adminView");
+              navigate("/adminview");
             }}
           >
             <ListItemIcon>
@@ -353,15 +359,13 @@ export default function Navbar(props) {
           <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" }, ml: "12px" }}>
             Weather With Me
           </Typography>
-          {(generalCtx.viewSelected === "tableView" ||
-            generalCtx.viewSelected === "" ||
-            generalCtx.viewSelected === "adminView") && (
+          {(matchHome || matchAdmin) && (
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder={generalCtx.viewSelected === "adminView" ? "Search user" : "Search location"}
+                placeholder={matchAdmin ? "Search user" : "Search location"}
                 inputProps={{ "aria-label": "search" }}
                 onChange={(e) => {
                   props.handleSearch(e.target.value);
