@@ -1,5 +1,5 @@
 //This function accepts api and data to send delete request, and return the response object from server. Moreover, the status code is added to the response object for further use.
-function deleteReq(url, data) {
+function deleteReq(url) {
   let status;
   const token = localStorage.getItem("token") || "";
   return fetch(url, {
@@ -8,11 +8,15 @@ function deleteReq(url, data) {
       "Content-Type": "application/json",
       "x-auth-token": token,
     },
-    body: JSON.stringify(data),
   })
     .then((response) => {
+      console.log(response.json());
       status = response.status;
-      return response.json();
+      try {
+        return response.json();
+      } catch (error) {
+        return response;
+      }
     })
     .then((result) => {
       result.status = status;

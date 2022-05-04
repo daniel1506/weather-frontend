@@ -54,7 +54,7 @@ function UserCard(props) {
     //sending request to ban user
     setBanning(true);
     console.log(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/${props.username}`);
-    deleteReq(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/${props.username}`, { hello: "hello" })
+    deleteReq(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/${props.username}`)
       .then((result) => {
         console.log(result);
         if (result.status != 200) setBanError(true);
@@ -67,6 +67,7 @@ function UserCard(props) {
         setBanning(false);
       })
       .catch((err) => {
+        console.log("炒咗");
         console.log(err);
       });
   };
