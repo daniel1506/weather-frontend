@@ -15,9 +15,9 @@ function get(url) {
       status = response.status;
       return response.json();
     })
-    .then((data) => {
-      data.status = status;
-      return data;
+    .then((result) => {
+      result.status = status;
+      return result;
     });
 }
 export default get;
