@@ -17,7 +17,9 @@ import put from "../../../lib/put";
 import deleteReq from "../../../lib/delete";
 import PasswordInput from "../../../components/PasswordInput";
 import Grow from "@mui/material/Grow";
+import NameInput from "../../../components/NameInput";
 function UserCard(props) {
+  const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [resetting, setResetting] = useState(false);
   const [error, setError] = useState(undefined);
@@ -27,34 +29,38 @@ function UserCard(props) {
     setResetting(null);
     setError(null);
   };
-  const reset = (user_id, password) => {
-    //sending request to reset user password
-    const data = { user_id, password };
+  const reset = () => {
+    //sending request to reset user password and username
+    const data = { username: newUsername, password: newPassword };
     console.log(data);
     setResetting(true);
-    put("https://rfriend.herokuapp.com/api/admin", data)
+    put(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/${props.username}`, data)
       .then((result) => {
         console.log(result);
-        if (result.status != 201) setError(true);
-        else setError(false);
+        if (result.status != 200) setError(true);
+        else {
+          setError(false);
+          props.setUsersModified((prev) => {
+            return prev + 1;
+          });
+        }
         setResetting(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const ban = (user_id) => {
+  const ban = () => {
     //sending request to ban user
-    const data = { user_id };
-    console.log(data);
     setBanning(true);
-    deleteReq("https://rfriend.herokuapp.com/api/admin/", data)
+    console.log(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/${props.username}`);
+    deleteReq(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/${props.username}`, { hello: "hello" })
       .then((result) => {
         console.log(result);
-        if (result.status != 201) setBanError(true);
+        if (result.status != 200) setBanError(true);
         else {
           setBanError(false);
-          props.setBanned((prev) => {
+          props.setUsersModified((prev) => {
             return prev + 1;
           });
         }
@@ -87,8 +93,8 @@ function UserCard(props) {
                       gap={{ sm: 2, xs: 0 }}
                     >
                       <AccountCircleIcon />
-                      <ShortText>{props.name}</ShortText>
-                      <ShortText color="primary">{`#${props.userId}`}</ShortText>
+                      <ShortText>{props.username}</ShortText>
+                      {props.userId !== undefined && <ShortText color="primary">{`#${props.userId}`}</ShortText>}
                     </Grid>
                   </Grid>
                   <Grid item>
@@ -99,6 +105,14 @@ function UserCard(props) {
                       justifyContent={{ xs: "end" }}
                       gap={{ sm: 2, xs: 1 }}
                     >
+                      <NameInput
+                        noHelperText
+                        label="new username"
+                        setUsername={setNewUsername}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      />
                       <PasswordInput
                         noHelperText
                         label="new password"
@@ -121,7 +135,7 @@ function UserCard(props) {
                           onClick={(e) => {
                             e.stopPropagation();
                             clearProgress();
-                            reset(props.userId, newPassword);
+                            reset();
                           }}
                           icon={<LockResetIcon />}
                           loading={resetting}
@@ -143,7 +157,7 @@ function UserCard(props) {
                           color="error"
                           onClick={(e) => {
                             e.stopPropagation();
-                            ban(props.userId);
+                            ban();
                           }}
                           icon={<BlockIcon />}
                         >
