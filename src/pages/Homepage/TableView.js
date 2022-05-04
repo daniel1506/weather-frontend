@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-//import CityCard from "../components/CityCard";
-import GeneralContext from "../store/general-context";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+//import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import get from "../../lib/get";
+import GeneralContext from "../../store/general-context";
 
 function TableView() {
   const [cityList, setCityList] = React.useState([]);
@@ -23,7 +31,7 @@ function TableView() {
 
 function InfoTable(props) {
   return (
-    <>
+    <>    
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -39,20 +47,20 @@ function InfoTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {props.info.map((info) => (
               <TableRow
-                key={row.name}
+                key={info.city}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {props.info.city}
+                  {info.city}
                 </TableCell>
-                <TableCell align="right">{props.info.country.temp_c}</TableCell>
-                <TableCell align="right">{props.info.weather.wind_kph}</TableCell>
-                <TableCell align="right">{props.info.weather.wind_dir}</TableCell>
-                <TableCell align="right">{props.info.weather.humidity}</TableCell>
-                <TableCell align="right">{props.info.weather.precip_mm}</TableCell>
-                <TableCell align="right">{props.info.weather.vis_km}</TableCell>             
+                <TableCell align="right">{info.country.temp_c}</TableCell>
+                <TableCell align="right">{info.weather.wind_kph}</TableCell>
+                <TableCell align="right">{info.weather.wind_dir}</TableCell>
+                <TableCell align="right">{info.weather.humidity}</TableCell>
+                <TableCell align="right">{info.weather.precip_mm}</TableCell>
+                <TableCell align="right">{info.weather.vis_km}</TableCell>             
               </TableRow>
             ))}
           </TableBody>
