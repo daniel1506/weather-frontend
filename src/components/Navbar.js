@@ -312,7 +312,7 @@ export default function Navbar(props) {
         }}
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
       >
-        <NameShowCase variant="text">{authCtx.name}</NameShowCase>
+        <NameShowCase variant="text">{authCtx.username}</NameShowCase>
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -320,7 +320,12 @@ export default function Navbar(props) {
         }}
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
       >
-        <LogoutButton variant="text" />
+        <LogoutButton
+          variant="text"
+          onClick={() => {
+            authCtx.logout();
+          }}
+        />
       </MenuItem>
     </Menu>
   );
@@ -421,13 +426,13 @@ export default function Navbar(props) {
                 props.setShowProfile(true);
               }}
             >
-              {authCtx.name}
+              {authCtx.username}
             </NameShowCase>
             <LogoutButton
               color="inherit"
               onClick={() => {
                 handleMenuClose();
-                props.onLogout();
+                authCtx.logout();
               }}
             />
 

@@ -52,16 +52,16 @@ function Logreg() {
   const reg = (e) => {
     e.preventDefault();
     setSubmitting(true);
-    let data = { email, name: username, password };
+    let data = { username, password, isAdmin: false };
     console.log(data);
-    post("https://rfriend.herokuapp.com/api/user/register", data)
-      .then((data) => {
-        console.log("Response:", data);
-        if (data.status != 201) {
+    post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/register`, data)
+      .then((result) => {
+        console.log("Response:", result);
+        if (result.status != 200) {
           setFail(true);
-          setFailMessage(data.message);
+          setFailMessage(result.message);
         } else {
-          authCtx.login(data.token, data.id, data.name, data.role);
+          authCtx.login(result.token, data.username, result.role);
         }
       })
       .then(() => {
@@ -74,16 +74,18 @@ function Logreg() {
   const log = (e) => {
     e.preventDefault();
     setSubmitting(true);
-    let data = { email, password };
+    let data = { username, password };
     console.log(data);
-    post("https://rfriend.herokuapp.com/api/user/login", data)
+    console.log(process.env.REACT_APP_BACKEND_BASE_URL);
+    post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/login`, data)
       .then((result) => {
         console.log("Response:", result);
         if (result.status != 200) {
           setFail(true);
           setFailMessage(result.message);
         } else {
-          authCtx.login(result.token, result.id, result.name, result.role);
+          console.log("login成功");
+          authCtx.login(result.token, data.username, result.role);
         }
       })
       .then(() => {
@@ -118,7 +120,7 @@ function Logreg() {
         {/* login form */}
         <form onSubmit={log}>
           <VerticalFlex gap="10px">
-            <EmailInput setEmail={setEmail} />
+            <NameInput setUsername={setUsername} />
             <PasswordInput setPassword={setPassword} />
             <SubmitButton loading={submitting} type="submit">
               Submit

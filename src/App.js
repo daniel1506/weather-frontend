@@ -23,15 +23,16 @@ function App() {
     <ThemeProvider theme={prefCtx.theme}>
       <CssBaseline />
       <Router>
-        {true && <Navbar />}
+        {authCtx.isLoggedIn && <Navbar />}
         <Routes>
-          <Route path="/" element={<Auth />}></Route>
-          <Route path="/homepage" element={<TableView />}></Route>
-          <Route path="/mapview" element={<MapView />}></Route>
-          <Route path="/favoriteview" element={<FavoriteView />}></Route>
-          <Route path="/adminview" element={<AdminView />}></Route>
-          <Route path="/location/:id" element={<LocationView />}></Route>
-          <Route path="*" element={<Navigate to="/homepage" />}></Route>
+          {!authCtx.isLoggedIn && <Route path="/" element={<Auth />}></Route>}
+          {authCtx.isLoggedIn && <Route path="/homepage" element={<TableView />}></Route>}
+          {authCtx.isLoggedIn && <Route path="/mapview" element={<MapView />}></Route>}
+          {authCtx.isLoggedIn && <Route path="/favoriteview" element={<FavoriteView />}></Route>}
+          {authCtx.isLoggedIn && <Route path="/adminview" element={<AdminView />}></Route>}
+          {authCtx.isLoggedIn && <Route path="/location/:id" element={<LocationView />}></Route>}
+          {authCtx.isLoggedIn && <Route path="*" element={<Navigate to="/homepage" />}></Route>}
+          {!authCtx.isLoggedIn && <Route path="*" element={<Navigate to="/" />}></Route>}
         </Routes>
       </Router>
     </ThemeProvider>
