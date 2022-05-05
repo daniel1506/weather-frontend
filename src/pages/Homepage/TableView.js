@@ -10,8 +10,7 @@ function TableView() {
 
   useEffect(() => {
     console.log("Getting weather info");
-    get("https://weathering-with-me-g12.herokuapp.com/location").then((r) => {
-      //r.pop();   
+    get("https://weathering-with-me-g12.herokuapp.com/location").then((r) => { 
       setCityList(r);
     });
   }, [generalCtx.eventEventModified]);

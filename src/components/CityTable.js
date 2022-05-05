@@ -27,11 +27,21 @@ import GeneralContext from "../store/general-context";
 
 
 function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-        return -1;
+    if (orderBy != 'name' && orderBy != 'country') {
+        if (b['weather'][orderBy] < a['weather'][orderBy]) {
+            return -1;
+        }
+        if (b['weather'][orderBy] > a['weather'][orderBy]) {
+            return 1;
+        }
     }
-    if (b[orderBy] > a[orderBy]) {
-        return 1;
+    else {
+        if (b[orderBy] < a[orderBy]) {
+            return -1;
+        }
+        if (b[orderBy] > a[orderBy]) {
+            return 1;
+        }
     }
     return 0;
 }
@@ -56,7 +66,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
-        id: 'city',
+        id: 'name',
         numeric: false,
         disablePadding: true,
         label: 'City',
@@ -68,19 +78,19 @@ const headCells = [
         label: 'Country',
     },
     {
-        id: 'temperature',
+        id: 'temp_c',
         numeric: true,
         disablePadding: false,
         label: 'Temperature (°C)',
     },
     {
-        id: 'windSpeed',
+        id: 'wind_kph',
         numeric: true,
         disablePadding: false,
         label: 'Wind Speed (kph)',
     },
     {
-        id: 'windDirection',
+        id: 'wind_dir',
         numeric: false,
         disablePadding: false,
         label: 'Wind Direction',
@@ -92,23 +102,17 @@ const headCells = [
         label: 'Humidity (%)',
     },
     {
-        id: 'precipitation',
+        id: 'precip_mm',
         numeric: true,
         disablePadding: false,
         label: 'Precipitation (mm)',
     },
     {
-        id: 'visibility',
+        id: 'vis_km',
         numeric: true,
         disablePadding: false,
         label: 'Visibility (km)',
     },
-    // {
-    //     id: 'favourite',
-    //     numeric: false,
-    //     disablePadding: false,
-    //     label: '',
-    // },
 ];
 
 function EnhancedTableHead(props) {
@@ -135,7 +139,7 @@ function EnhancedTableHead(props) {
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.id == "city" ? 'left' : 'right'}
+                        align={headCell.id == "name" ? 'left' : 'right'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -230,7 +234,7 @@ EnhancedTableToolbar.propTypes = {
 export default function CityTable(props) {
     const [rows, setRows] = React.useState(props.info);
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('name');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
@@ -238,6 +242,7 @@ export default function CityTable(props) {
     const generalCtx = React.useContext(GeneralContext);
 
     useEffect(() => {
+        setRows(props.info);
         console.log(props.info);
     }, [generalCtx.eventEventModified, props.info]);
 
@@ -245,6 +250,7 @@ export default function CityTable(props) {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
+        console.log(orderBy);
     };
 
     const handleSelectAllClick = (event) => {
@@ -327,11 +333,11 @@ export default function CityTable(props) {
                                         <TableRow
                                             hover
                                             onClick={(event) => handleClick(event, row.name)}
-                                            role="checkbox"
-                                            aria-checked={isItemSelected}
+                                            //role="checkbox"
+                                            //aria-checked={isItemSelected}
                                             tabIndex={-1}
                                             key={row.name}
-                                            selected={isItemSelected}
+                                            //selected={isItemSelected}
                                         >
                                             <TableCell 
                                             //padding="checkbox" 
