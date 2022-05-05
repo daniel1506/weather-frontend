@@ -12,11 +12,7 @@ function deleteReq(url) {
     .then((response) => {
       console.log(response.json());
       status = response.status;
-      try {
-        return response.json();
-      } catch (error) {
-        return response;
-      }
+      return response.json();
     })
     .then((result) => {
       result.status = status;

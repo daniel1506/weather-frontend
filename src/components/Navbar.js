@@ -372,8 +372,8 @@ export default function Navbar(props) {
               <StyledInputBase
                 placeholder={matchAdmin ? "Search user" : "Search location"}
                 inputProps={{ "aria-label": "search" }}
-                onChange={(e) => {
-                  props.handleSearch(e.target.value);
+                onInput={(e) => {
+                  generalCtx.setSearchWord(e.target.value);
                 }}
               />
             </Search>

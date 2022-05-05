@@ -5,13 +5,16 @@ const GeneralContext = React.createContext({
   //notice everything you get from localStorage will be string, since we rely on localStorage, here everything will be string to let intelSense remind user these thing will be string when we access them.
   eventIdSelected: null,
   eventEventModified: false,
+  searchWord: "",
   handleSelectEvent: (eventId) => {},
   handleEventModified: () => {},
+  setSearchWord: () => {},
 });
 
 export const GeneralContextProvider = (props) => {
   const [eventIdSelected, setEventIdSelected] = useState(null);
   const [eventEventModified, setEventModified] = useState(false);
+  const [searchWord, setSearchWord] = useState("");
   const handleSelectEvent = (eventId) => {
     setEventIdSelected(eventId);
   };
@@ -24,8 +27,10 @@ export const GeneralContextProvider = (props) => {
   const contextValue = {
     eventEventModified: eventEventModified,
     eventIdSelected: eventIdSelected,
+    searchWord: searchWord,
     handleSelectEvent: handleSelectEvent,
     handleEventModified: handleEventModified,
+    setSearchWord: setSearchWord,
   };
 
   return <GeneralContext.Provider value={contextValue}>{props.children}</GeneralContext.Provider>;

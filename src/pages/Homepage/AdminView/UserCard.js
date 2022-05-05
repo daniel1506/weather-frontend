@@ -18,6 +18,7 @@ import deleteReq from "../../../lib/delete";
 import PasswordInput from "../../../components/PasswordInput";
 import Grow from "@mui/material/Grow";
 import NameInput from "../../../components/NameInput";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 function UserCard(props) {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -93,7 +94,8 @@ function UserCard(props) {
                       justifyContent={{ xs: "start" }}
                       gap={{ sm: 2, xs: 0 }}
                     >
-                      <AccountCircleIcon />
+                      {!props.isAdmin && <AccountCircleIcon />}
+                      {props.isAdmin && <AdminPanelSettingsIcon color={"error"} />}
                       <ShortText>{props.username}</ShortText>
                       {props.userId !== undefined && <ShortText color="primary">{`#${props.userId}`}</ShortText>}
                     </Grid>
@@ -101,7 +103,7 @@ function UserCard(props) {
                   <Grid item>
                     <Grid
                       container
-                      direction={{ xs: "column", sm: "row" }}
+                      direction={{ xs: "column", md: "row" }}
                       alignItems={{ xs: "end", md: "center" }}
                       justifyContent={{ xs: "end" }}
                       gap={{ sm: 2, xs: 1 }}
@@ -141,7 +143,7 @@ function UserCard(props) {
                           icon={<LockResetIcon />}
                           loading={resetting}
                         >
-                          Reset password
+                          update Info
                         </SubmitButton>
                       </Box>
                       <Box

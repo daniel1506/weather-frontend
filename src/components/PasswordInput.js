@@ -20,7 +20,7 @@ function PasswordInput(props) {
   return (
     <FormControl
       variant="outlined"
-      sx={{ width: "210px" }}
+      sx={{ width: "210px", height: "56px" }}
       onClick={(e) => {
         e.stopPropagation();
       }}
