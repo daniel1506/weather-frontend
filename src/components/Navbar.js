@@ -260,44 +260,6 @@ export default function Navbar(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem> */}
-      {/* <MenuItem
-        onClick={() => {
-          generalCtx.handleChangeView();
-        }}
-        sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
-      >
-        {generalCtx.isMapView && (
-          <Button color="inherit" startIcon={<TravelExploreIcon />}>
-            Map view
-          </Button>
-        )}
-        {!generalCtx.isMapView && (
-          <Button color="inherit" startIcon={<CalendarMonthIcon />}>
-            {" "}
-            Calendar view
-          </Button>
-        )}
-      </MenuItem> */}
       <MenuItem
         sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}
         onClick={() => {
@@ -337,6 +299,9 @@ export default function Navbar(props) {
       />
     </svg>
   );
+  useEffect(() => {
+    generalCtx.setSearchWord("");
+  }, [matchAdmin]);
   return (
     <Box sx={{ flexGrow: 1, marginBottom: "64px" }}>
       <AppBar position="fixed" sx={props.admin ? { background: "black" } : {}}>
@@ -372,6 +337,7 @@ export default function Navbar(props) {
               <StyledInputBase
                 placeholder={matchAdmin ? "Search user" : "Search location"}
                 inputProps={{ "aria-label": "search" }}
+                value={generalCtx.searchWord}
                 onInput={(e) => {
                   generalCtx.setSearchWord(e.target.value);
                 }}

@@ -6,14 +6,21 @@ import get from "../../../lib/get";
 import CreateUser from "./CreateUser";
 import { Filter } from "@mui/icons-material";
 import GeneralContext from "../../../store/general-context";
+import { LinearProgress } from "@mui/material";
 function AdminView() {
   const [users, setUsers] = useState([{}]);
   const [usersModified, setUsersModified] = useState(0);
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
   const generalCtx = useContext(GeneralContext);
   useEffect(() => {
+    setIsLoadingUsers(true);
     get(`${process.env.REACT_APP_BACKEND_BASE_URL}/user`).then((result) => {
       console.log(result);
-      setUsers(result);
+      setIsLoadingUsers(false);
+      if (result.status != 200) {
+      } else {
+        setUsers(result);
+      }
     });
   }, [usersModified]);
   let filteredUsers = users.filter((user) => {
@@ -25,12 +32,14 @@ function AdminView() {
   return (
     <>
       <CreateUser setUsersModified={setUsersModified} />
-      <Container>
-        {<UserCard name="hi" userId="hihi" />}
-        {filteredUsers.map((user) => {
-          return <UserCard username={user.username} setUsersModified={setUsersModified} isAdmin={user.isAdmin} />;
-        })}
-      </Container>
+      {!isLoadingUsers && (
+        <Container>
+          {filteredUsers.map((user) => {
+            return <UserCard username={user.username} setUsersModified={setUsersModified} isAdmin={user.isAdmin} />;
+          })}
+        </Container>
+      )}
+      {isLoadingUsers && <LinearProgress />}
     </>
   );
 }
