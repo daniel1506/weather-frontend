@@ -20,6 +20,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { grey, pink, secondary } from "@mui/material/colors";
 import { visuallyHidden } from '@mui/utils';
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import GeneralContext from "../store/general-context";
@@ -70,7 +71,7 @@ const headCells = [
         id: 'temperature',
         numeric: true,
         disablePadding: false,
-        label: 'Temperature',
+        label: 'Temperature (°C)',
     },
     {
         id: 'windSpeed',
@@ -102,6 +103,12 @@ const headCells = [
         disablePadding: false,
         label: 'Visibility (km)',
     },
+    // {
+    //     id: 'favourite',
+    //     numeric: false,
+    //     disablePadding: false,
+    //     label: '',
+    // },
 ];
 
 function EnhancedTableHead(props) {
@@ -115,7 +122,7 @@ function EnhancedTableHead(props) {
         <TableHead>
             <TableRow>
                 <TableCell padding="checkbox">
-                    <Checkbox
+                    {/* <Checkbox
                         color="primary"
                         indeterminate={numSelected > 0 && numSelected < rowCount}
                         checked={rowCount > 0 && numSelected === rowCount}
@@ -123,12 +130,12 @@ function EnhancedTableHead(props) {
                         inputProps={{
                             'aria-label': 'select all citys',
                         }}
-                    />
+                    /> */}
                 </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.id=="city" ? 'left' : 'right'}
+                        align={headCell.id == "city" ? 'left' : 'right'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -162,59 +169,63 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
     const { numSelected } = props;
-  
+
+    function favouriteIconOnClickHandler() {
+
+    }
+
     return (
-      <Toolbar
-        sx={{
-          pl: { sm: 2 },
-          pr: { xs: 1, sm: 1 },
-          ...(numSelected > 0 && {
-            bgcolor: (theme) =>
-              alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-          }),
-        }}
-      >
-        {numSelected > 0 ? (
-          <Typography
-            sx={{ flex: '1 1 100%' }}
-            color="inherit"
-            variant="subtitle1"
-            component="div"
-          >
-            {numSelected} selected
-          </Typography>
-        ) : (
-          <Typography
-            sx={{ flex: '1 1 100%' }}
-            variant="h6"
-            id="tableTitle"
-            component="div"
-          >
-            City List
-          </Typography>
-        )}
-  
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton>
-              <FavoriteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-        //   <Tooltip title="Filter list">
-        //     <IconButton>
-        //       <FilterListIcon />
-        //     </IconButton>
-        //   </Tooltip>
-            <></>
-        )}
-      </Toolbar>
+        <Toolbar
+            sx={{
+                pl: { sm: 2 },
+                pr: { xs: 1, sm: 1 },
+                ...(numSelected > 0 && {
+                    bgcolor: (theme) =>
+                        alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+                }),
+            }}
+        >
+            {numSelected > 0 ? (
+                <Typography
+                    sx={{ flex: '1 1 100%' }}
+                    color="inherit"
+                    variant="subtitle1"
+                    component="div"
+                >
+                    {numSelected} selected
+                </Typography>
+            ) : (
+                <Typography
+                    sx={{ flex: '1 1 100%' }}
+                    variant="h6"
+                    id="tableTitle"
+                    component="div"
+                >
+                    City List
+                </Typography>
+            )}
+
+            {numSelected > 0 ? (
+                <Tooltip title="Favourite">
+                    <IconButton>
+                        <FavoriteIcon />
+                    </IconButton>
+                </Tooltip>
+            ) : (
+                //   <Tooltip title="Filter list">
+                //     <IconButton>
+                //       <FilterListIcon />
+                //     </IconButton>
+                //   </Tooltip>
+                <></>
+            )}
+        </Toolbar>
     );
-  };
-  
-  EnhancedTableToolbar.propTypes = {
+};
+
+EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
-  };
+};
 
 export default function CityTable(props) {
     const [rows, setRows] = React.useState(props.info);
@@ -245,25 +256,28 @@ export default function CityTable(props) {
         setSelected([]);
     };
 
+    // const handleClick = (event, name) => {
+    //     const selectedIndex = selected.indexOf(name);
+    //     let newSelected = [];
+
+    //     if (selectedIndex === -1) {
+    //         newSelected = newSelected.concat(selected, name);
+    //     } else if (selectedIndex === 0) {
+    //         newSelected = newSelected.concat(selected.slice(1));
+    //     } else if (selectedIndex === selected.length - 1) {
+    //         newSelected = newSelected.concat(selected.slice(0, -1));
+    //     } else if (selectedIndex > 0) {
+    //         newSelected = newSelected.concat(
+    //             selected.slice(0, selectedIndex),
+    //             selected.slice(selectedIndex + 1),
+    //         );
+    //     }
+
+    //     setSelected(newSelected);
+    // };
     const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        setSelected(newSelected);
-    };
+        alert('HI');
+    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -303,8 +317,6 @@ export default function CityTable(props) {
                             rowCount={rows.length}
                         />
                         <TableBody>
-                            {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                   rows.slice().sort(getComparator(order, orderBy)) */}
                             {stableSort(props.info, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
@@ -321,14 +333,17 @@ export default function CityTable(props) {
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">
-                                                <Checkbox
+                                            <TableCell 
+                                            //padding="checkbox" 
+                                            align="center">
+                                                {/* <Checkbox
                                                     color="primary"
                                                     checked={isItemSelected}
                                                     inputProps={{
                                                         'aria-labelledby': labelId,
                                                     }}
-                                                />
+                                                /> */}
+                                                {props.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon sx={{ color: grey[500] }} />}
                                             </TableCell>
                                             <TableCell
                                                 component="th"
@@ -339,19 +354,15 @@ export default function CityTable(props) {
                                                 {row.name}
                                             </TableCell>
                                             <TableCell align="right">{row.country}</TableCell>
-                                            <TableCell align="right">{row.country}</TableCell>
-                                            <TableCell align="right">{row.country}</TableCell>
-                                            <TableCell align="right">{row.country}</TableCell>
-                                            <TableCell align="right">{row.country}</TableCell>
-                                            <TableCell align="right">{row.country}</TableCell>
-                                            <TableCell align="right">{row.country}</TableCell>
-                                            {/* <TableCell align="right">{row.country}</TableCell>
                                             <TableCell align="right">{row.weather.temp_c}</TableCell>
                                             <TableCell align="right">{row.weather.wind_kph}</TableCell>
                                             <TableCell align="right">{row.weather.wind_dir}</TableCell>
                                             <TableCell align="right">{row.weather.humidity}</TableCell>
                                             <TableCell align="right">{row.weather.precip_mm}</TableCell>
-                                            <TableCell align="right">{row.weather.vis_km}</TableCell> */}
+                                            <TableCell align="right">{row.weather.vis_km}</TableCell>
+                                            {/* <TableCell align="right">
+                                                {props.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon sx={{ color: grey[500] }} />}
+                                            </TableCell> */}
                                         </TableRow>
                                     );
                                 })}
