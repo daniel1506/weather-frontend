@@ -20,7 +20,6 @@ function PasswordInput(props) {
   return (
     <FormControl
       variant="outlined"
-      sx={{ width: "210px", height: "56px" }}
       onClick={(e) => {
         e.stopPropagation();
       }}
@@ -29,6 +28,7 @@ function PasswordInput(props) {
         {props.label ? props.label : "password"}
       </InputLabel>
       <OutlinedInput
+        sx={{ width: "210px", height: "56px" }}
         id="outlined-adornment-password"
         type={showPassword ? "text" : "password"}
         value={password}

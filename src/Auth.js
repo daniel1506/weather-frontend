@@ -37,7 +37,7 @@ function Auth() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3">Weathering With Me</Typography>
+          <Typography variant="h4">Weathering With Me</Typography>
         </div>
       </Fade>
       <Logreg />
