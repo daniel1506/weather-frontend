@@ -19,11 +19,12 @@ function CfPasswordInput(props) {
     event.preventDefault();
   };
   return (
-    <FormControl variant="outlined" sx={{ width: "210px" }}>
+    <FormControl variant="outlined">
       <InputLabel htmlFor="outlined-adornment-cfpassword" color={cfPasswordError && "error"}>
         {props.label ? props.label : "confirm password"}
       </InputLabel>
       <OutlinedInput
+        sx={{ width: "210px", height: "56px" }}
         id="outlined-adornment-cfpassword"
         type={showCfPassword ? "text" : "password"}
         value={cfPassword}
@@ -51,9 +52,11 @@ function CfPasswordInput(props) {
         }
         label="confirm password"
       />
-      <FormHelperText id="outlined-weight-helper-text-cf" sx={{ color: "#d32f2f" }}>
-        {cfPasswordError && !props.noHelperText ? "Must has at least 8 characters" : ""}
-      </FormHelperText>
+      {cfPasswordError && !props.noHelperText && (
+        <FormHelperText id="outlined-weight-helper-text" sx={{ color: "#d32f2f" }}>
+          Doesn't match
+        </FormHelperText>
+      )}
     </FormControl>
   );
 }
