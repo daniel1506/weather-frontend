@@ -57,9 +57,9 @@ function PasswordInput(props) {
         }
         label={props.label ? props.label : "password"}
       />
-      <FormHelperText id="outlined-weight-helper-text" sx={{ color: "#d32f2f" }}>
-        {passwordError && !props.noHelperText ? "Must has at least 8 characters" : ""}
-      </FormHelperText>
+      {passwordError && !props.noHelperText && (
+        <FormHelperText id="outlined-weight-helper-text" sx={{ color: "#d32f2f" }}></FormHelperText>
+      )}
     </FormControl>
   );
 }
