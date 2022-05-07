@@ -6,21 +6,29 @@ const GeneralContext = React.createContext({
   eventIdSelected: null,
   eventEventModified: false,
   searchWord: "",
+  locationModified: 0,
   handleSelectEvent: (eventId) => {},
   handleEventModified: () => {},
   setSearchWord: () => {},
+  handleLocationModified: () => {},
 });
 
 export const GeneralContextProvider = (props) => {
   const [eventIdSelected, setEventIdSelected] = useState(null);
   const [eventEventModified, setEventModified] = useState(false);
   const [searchWord, setSearchWord] = useState("");
+  const [locationModified, setLocationModified] = useState(0);
   const handleSelectEvent = (eventId) => {
     setEventIdSelected(eventId);
   };
   const handleEventModified = () => {
     setEventModified((prev) => {
       return !prev;
+    });
+  };
+  const handleLocationModified = () => {
+    setLocationModified((prev) => {
+      return prev + 1;
     });
   };
   //provide an interface for components to use i.e. generalCtx.xxx
@@ -30,6 +38,7 @@ export const GeneralContextProvider = (props) => {
     searchWord: searchWord,
     handleSelectEvent: handleSelectEvent,
     handleEventModified: handleEventModified,
+    handleLocationModified: handleLocationModified,
     setSearchWord: setSearchWord,
   };
 
