@@ -13,10 +13,10 @@ function Homepage() {
   return (
     <>
       <Navbar />
-      {(generalCtx.viewSelected === "tableView" || generalCtx.viewSelected === "") && <TableView />}
-      {generalCtx.viewSelected === "mapView" && <MapView />}
-      {generalCtx.viewSelected === "adminView" && <AdminView />}
-      {generalCtx.viewSelected === "favourites" && <FavoriteView />}
+      <TableView />
+      <MapView />
+      <AdminView />
+      <FavoriteView />
     </>
   );
 }
