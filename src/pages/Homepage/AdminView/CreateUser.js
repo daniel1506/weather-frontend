@@ -34,7 +34,7 @@ function CreateUser(props) {
     <HorizontalFlex
       flexDirection={{ xs: "column", md: "row" }}
       justifyContent={{ xs: "start" }}
-      sx={{ marginLeft: "10px", marginTop: "70px", gap: "15px" }}
+      sx={{ padding: "10px", gap: "15px" }}
     >
       <NameInput setUsername={setUsername} />
       <PasswordInput setPassword={setPassword} />
