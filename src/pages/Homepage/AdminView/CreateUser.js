@@ -38,7 +38,7 @@ function CreateUser(props) {
     >
       <NameInput setUsername={setUsername} />
       <PasswordInput setPassword={setPassword} />
-      <GeneralSwitch label="Admin" setChecked={setAdminChecked} />
+      <GeneralSwitch label="Admin permission" setChecked={setAdminChecked} />
       <SubmitButton
         variant="contained"
         error={failed}

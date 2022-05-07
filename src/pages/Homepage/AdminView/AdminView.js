@@ -32,6 +32,7 @@ function AdminView() {
   return (
     <>
       <CreateUser setUsersModified={setUsersModified} />
+      <Divider />
       {!isLoadingUsers && (
         <Container>
           {filteredUsers.map((user) => {
