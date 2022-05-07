@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 function LocationView() {
-  const { id } = useParams();
-  return <div>LocationView, current locationId:{id}</div>;
+  const { cityName } = useParams();
+  return <div>LocationView, current cityName:{cityName}</div>;
 }
 
 export default LocationView;

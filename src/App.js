@@ -30,7 +30,7 @@ function App() {
           {authCtx.isLoggedIn && <Route path="/mapview" element={<MapView />}></Route>}
           {authCtx.isLoggedIn && <Route path="/favoriteview" element={<FavoriteView />}></Route>}
           {authCtx.isLoggedIn && <Route path="/adminview" element={<AdminView />}></Route>}
-          {authCtx.isLoggedIn && <Route path="/location/:id" element={<LocationView />}></Route>}
+          {authCtx.isLoggedIn && <Route path="/location/:cityName" element={<LocationView />}></Route>}
           {authCtx.isLoggedIn && <Route path="*" element={<Navigate to="/homepage" />}></Route>}
           {!authCtx.isLoggedIn && <Route path="*" element={<Navigate to="/" />}></Route>}
         </Routes>
