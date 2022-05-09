@@ -5,7 +5,6 @@ import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { MarkEmailReadTwoTone } from "@mui/icons-material";
 import get from "../../lib/get";
 import { useNavigate } from "react-router-dom";
-import { navigate } from "react-big-calendar/lib/utils/constants";
 function Map(props) {
   const ref = useRef();
   const [map, setMap] = useState();
