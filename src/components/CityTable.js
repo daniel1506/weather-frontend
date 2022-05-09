@@ -174,10 +174,6 @@ EnhancedTableHead.propTypes = {
 const EnhancedTableToolbar = (props) => {
     const { numSelected } = props;
 
-    function favouriteIconOnClickHandler() {
-
-    }
-
     return (
         <Toolbar
             sx={{
@@ -243,7 +239,7 @@ export default function CityTable(props) {
 
     useEffect(() => {
         setRows(props.info);
-        console.log(props.info);
+        //console.log(props.info);
     }, [generalCtx.eventEventModified, props.info]);
 
     const handleRequestSort = (event, property) => {
@@ -325,6 +321,9 @@ export default function CityTable(props) {
                         <TableBody>
                             {stableSort(props.info, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .filter((city) => {
+                                    return city.name.toLowerCase().includes(generalCtx.searchWord.toLowerCase());
+                                })
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
