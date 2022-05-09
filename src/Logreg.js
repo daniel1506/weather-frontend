@@ -27,7 +27,6 @@ function Logreg() {
   const [submitting, setSubmitting] = React.useState(false);
   const [emailSuccess, setEmailSuccess] = React.useState(false);
   const authCtx = useContext(AuthContext);
-  const navigate = useNavigate();
   const handleLog = () => {
     setLogChecked((prev) => !prev);
     setRegChecked(false);
