@@ -20,3 +20,19 @@ function put(url, data) {
     });
 }
 export default put;
+// fetch(`https://weathering-with-me-g12.herokuapp.com/location/Dubai`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "x-auth-token": `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzNlMjE0Y2VhZDc4NWI5MTRiOTVmZiIsImlhdCI6MTY1MjE4MzkyNSwiZXhwIjoxNjUyMjcwMzI1fQ.eTqYBJlhWWQvNmxq4YVJAsMeP717BO9nnR2hmPV3wwg`,
+//     },
+//     body: JSON.stringify({lat:25.25,long:55.28,cityName:"Dubai"}),
+//   })
+//     .then((response) => {
+//       status = response.status;
+//       return response.json();
+//     })
+//     .then((result) => {
+//       result.status = status;
+//       return result;
+//     }).then((resultx)=>{console.log(resultx)});

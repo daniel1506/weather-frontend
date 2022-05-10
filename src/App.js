@@ -9,6 +9,7 @@ import TableView from "./pages/Homepage/TableView";
 import MapView from "./pages/Homepage/MapView";
 import FavoriteView from "./pages/Homepage/FavoriteView";
 import AdminView from "./pages/Homepage/AdminView/AdminView";
+import AdminLocView from "./pages/Homepage/AdminLocView/AdminLocView.js";
 import LocationView from "./pages/Homepage/LocationView.js";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -30,6 +31,7 @@ function App() {
           {authCtx.isLoggedIn && <Route path="/mapview" element={<MapView />}></Route>}
           {authCtx.isLoggedIn && <Route path="/favoriteview" element={<FavoriteView />}></Route>}
           {authCtx.isLoggedIn && <Route path="/adminview" element={<AdminView />}></Route>}
+          {authCtx.isLoggedIn && <Route path="/adminlocview" element={<AdminLocView />}></Route>}
           {authCtx.isLoggedIn && <Route path="/location/:cityName" element={<LocationView />}></Route>}
           {authCtx.isLoggedIn && <Route path="*" element={<Navigate to="/homepage" />}></Route>}
           {!authCtx.isLoggedIn && <Route path="*" element={<Navigate to="/" />}></Route>}
