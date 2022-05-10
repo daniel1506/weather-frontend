@@ -139,18 +139,18 @@ export default function Navbar(props) {
         }}
       >
         <List>
-          <ListItem
-            button
-            onClick={() => {
-              props.setShowCreateEvent(true);
-            }}
-          >
-            <ListItemIcon>
-              <CloudDownloadIcon sx={{ height: drawerIconSize, width: drawerIconSize }} color="info" />
-            </ListItemIcon>
-            <ListItemText primary={"Refresh data"} />
-          </ListItem>
-          <Divider sx={{ my: 1 }} />
+          {authCtx.role === "admin" && (
+            <>
+              <ListItem button>
+                <ListItemIcon>
+                  <CloudDownloadIcon sx={{ height: drawerIconSize, width: drawerIconSize }} color="info" />
+                </ListItemIcon>
+                <ListItemText primary={"Refresh data"} />
+              </ListItem>
+
+              <Divider sx={{ my: 1 }} />
+            </>
+          )}
           <Typography variant="caption" sx={{ ml: 2, textTransform: "uppercase", py: 1, display: "block" }}>
             Browse Locations
           </Typography>
@@ -192,18 +192,20 @@ export default function Navbar(props) {
             <ListItemText>Favorites</ListItemText>
           </ListItem>
           <Divider sx={{ my: 1 }} />
-          <ListItem
-            button
-            selected={matchAdmin}
-            onClick={() => {
-              navigate("/adminview");
-            }}
-          >
-            <ListItemIcon>
-              <ManageAccountsIcon sx={{ height: drawerIconSize, width: drawerIconSize }} />
-            </ListItemIcon>
-            <ListItemText>Manage users</ListItemText>
-          </ListItem>
+          {authCtx.role === "admin" && (
+            <ListItem
+              button
+              selected={matchAdmin}
+              onClick={() => {
+                navigate("/adminview");
+              }}
+            >
+              <ListItemIcon>
+                <ManageAccountsIcon sx={{ height: drawerIconSize, width: drawerIconSize }} />
+              </ListItemIcon>
+              <ListItemText>Manage users</ListItemText>
+            </ListItem>
+          )}
         </List>
       </Box>
     </SwipeableDrawer>
