@@ -74,39 +74,38 @@ function UserCard(props) {
   };
   return (
     <Grow in={true} timeout={500}>
-      <Card sx={{ marginBottom: 2 }}>
+      <Card sx={{ my: 2 }}>
         <ListItem disablePadding>
           <ListItemButton component="a" href="#simple-list">
             <ListItemText
               primary={
-                <Grid
-                  container
-                  direction={{ xs: "row" }}
-                  alignItems="center"
-                  justifyContent={{ xs: "space-between" }}
-                  gap={{ sm: 2, xs: 0 }}
-                >
-                  <Grid item>
-                    <Grid
-                      container
-                      direction={{ xs: "column", sm: "row" }}
-                      alignItems="center"
-                      justifyContent={{ xs: "start" }}
-                      gap={{ sm: 2, xs: 0 }}
+                <Grid container>
+                  <Grid item xs={4}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "start",
+                        gap: "10px",
+                        height: "100%",
+                      }}
                     >
                       {!props.isAdmin && <AccountCircleIcon />}
                       {props.isAdmin && <AdminPanelSettingsIcon color={"error"} />}
                       <ShortText>{props.username}</ShortText>
                       {props.userId !== undefined && <ShortText color="primary">{`#${props.userId}`}</ShortText>}
-                    </Grid>
+                    </Box>
                   </Grid>
-                  <Grid item>
-                    <Grid
-                      container
-                      direction={{ xs: "column", md: "row" }}
-                      alignItems={{ xs: "end", md: "center" }}
-                      justifyContent={{ xs: "end" }}
-                      gap={{ sm: 2, xs: 1 }}
+                  <Grid item xs={8}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: { xs: "column", lg: "row" },
+                        alignItems: { xs: "end", lg: "center" },
+                        justifyContent: "end",
+                        gap: "10px",
+                      }}
                     >
                       <NameInput
                         noHelperText
@@ -167,7 +166,7 @@ function UserCard(props) {
                           Ban
                         </SubmitButton>
                       </Box>
-                    </Grid>
+                    </Box>
                   </Grid>
                 </Grid>
               }
