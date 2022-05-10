@@ -320,10 +320,10 @@ export default function CityTable(props) {
                         />
                         <TableBody>
                             {stableSort(props.info, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .filter((city) => {
                                     return city.name.toLowerCase().includes(generalCtx.searchWord.toLowerCase());
                                 })
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)                               
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
