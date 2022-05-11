@@ -6,18 +6,18 @@ const GeneralContext = React.createContext({
   eventIdSelected: null,
   eventModified: false,
   searchWord: "",
-  locationModified: 0,
+  locationsModified: 0,
   handleSelectEvent: (eventId) => {},
   handleEventModified: () => {},
   setSearchWord: () => {},
-  handleLocationModified: () => {},
+  handleLocationsModified: () => {},
 });
 
 export const GeneralContextProvider = (props) => {
   const [eventIdSelected, setEventIdSelected] = useState(null);
   const [eventModified, setEventModified] = useState(false);
   const [searchWord, setSearchWord] = useState("");
-  const [locationModified, setLocationModified] = useState(0);
+  const [locationsModified, setLocationsModified] = useState(0);
   const handleSelectEvent = (eventId) => {
     setEventIdSelected(eventId);
   };
@@ -26,8 +26,8 @@ export const GeneralContextProvider = (props) => {
       return !prev;
     });
   };
-  const handleLocationModified = () => {
-    setLocationModified((prev) => {
+  const handleLocationsModified = () => {
+    setLocationsModified((prev) => {
       return prev + 1;
     });
   };
@@ -36,9 +36,10 @@ export const GeneralContextProvider = (props) => {
     eventModified: eventModified,
     eventIdSelected: eventIdSelected,
     searchWord: searchWord,
+    locationsModified: locationsModified,
     handleSelectEvent: handleSelectEvent,
     handleEventModified: handleEventModified,
-    handleLocationModified: handleLocationModified,
+    handleLocationsModified: handleLocationsModified,
     setSearchWord: setSearchWord,
   };
 

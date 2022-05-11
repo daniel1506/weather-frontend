@@ -11,7 +11,6 @@ import CreateLocation from "./CreateLocation.js";
 function AdminLocView() {
   const [locations, setLocations] = useState([{}]);
   const [locationsLoading, setLocationsLoading] = useState();
-  const [locationsModified, setLocationsModified] = useState();
   const generalCtx = useContext(GeneralContext);
   useEffect(() => {
     get(`${process.env.REACT_APP_BACKEND_BASE_URL}/location`).then((result) => {
@@ -20,10 +19,10 @@ function AdminLocView() {
         setLocations(result);
       }
     });
-  }, []);
+  }, [generalCtx.locationsModified]);
   return (
     <>
-      <CreateLocation setLocations />
+      <CreateLocation />
       <Container>
         {locations.map((location) => {
           return <LocationCard name={location.name} lat={location.lat} lng={location.long} />;

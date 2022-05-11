@@ -26,7 +26,7 @@ function LocationCard(props) {
           setUpdateFailed(true);
         } else {
           setUpdateFailed(false);
-          generalCtx.handleLocationModified();
+          generalCtx.handleLocationsModified();
         }
         setUpdating(false);
       })
