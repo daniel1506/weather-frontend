@@ -225,7 +225,7 @@ export default function CityTable(props) {
   const navigate = useNavigate();
   useEffect(() => {
     setRows(props.info);
-    console.log(props.info);
+    //console.log(props.info);
   }, [generalCtx.eventModified, props.info]);
 
   const handleRequestSort = (event, property) => {
