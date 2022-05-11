@@ -4,7 +4,7 @@ const GeneralContext = React.createContext({
   //we will declare and initialize them in the later part, so the code here only for readability and intelSense, no technical effect
   //notice everything you get from localStorage will be string, since we rely on localStorage, here everything will be string to let intelSense remind user these thing will be string when we access them.
   eventIdSelected: null,
-  eventEventModified: false,
+  eventModified: false,
   searchWord: "",
   locationModified: 0,
   handleSelectEvent: (eventId) => {},
@@ -15,7 +15,7 @@ const GeneralContext = React.createContext({
 
 export const GeneralContextProvider = (props) => {
   const [eventIdSelected, setEventIdSelected] = useState(null);
-  const [eventEventModified, setEventModified] = useState(false);
+  const [eventModified, setEventModified] = useState(false);
   const [searchWord, setSearchWord] = useState("");
   const [locationModified, setLocationModified] = useState(0);
   const handleSelectEvent = (eventId) => {
@@ -33,7 +33,7 @@ export const GeneralContextProvider = (props) => {
   };
   //provide an interface for components to use i.e. generalCtx.xxx
   const contextValue = {
-    eventEventModified: eventEventModified,
+    eventModified: eventModified,
     eventIdSelected: eventIdSelected,
     searchWord: searchWord,
     handleSelectEvent: handleSelectEvent,

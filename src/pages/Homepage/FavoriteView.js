@@ -4,19 +4,18 @@ import get from "../../lib/get";
 import GeneralContext from "../../store/general-context";
 
 function FavoriteView() {
-
   const [favouriteList, setFavouriteList] = React.useState([]);
   const generalCtx = React.useContext(GeneralContext);
 
   useEffect(() => {
-    get("https://weathering-with-me-g12.herokuapp.com/location").then((r) => {         
+    get("https://weathering-with-me-g12.herokuapp.com/location").then((r) => {
       setFavouriteList(
         r.filter((city) => {
           return city.isFavourite;
         })
       );
     });
-  }, [generalCtx.eventEventModified]);
+  }, [generalCtx.eventModified]);
 
   return (
     <>

@@ -39,6 +39,7 @@ import PrefContext from "../store/preference-context";
 import MaterialUISwitch from "./MaterialUISwitch";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import EditLocationIcon from "@mui/icons-material/EditLocation";
 import { useMatch, useNavigate } from "react-router-dom";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -98,6 +99,7 @@ export default function Navbar(props) {
   const matchMap = useMatch("/mapview");
   const matchFavorite = useMatch("/favoriteview");
   const matchAdmin = useMatch("/adminview");
+  const matchAdminLoc = useMatch("/adminlocview");
   const navigate = useNavigate();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -141,7 +143,12 @@ export default function Navbar(props) {
         <List>
           {authCtx.role === "admin" && (
             <>
-              <ListItem button>
+              <ListItem
+                button
+                onClick={() => {
+                  generalCtx.handleEventModified();
+                }}
+              >
                 <ListItemIcon>
                   <CloudDownloadIcon sx={{ height: drawerIconSize, width: drawerIconSize }} color="info" />
                 </ListItemIcon>
@@ -204,6 +211,20 @@ export default function Navbar(props) {
                 <ManageAccountsIcon sx={{ height: drawerIconSize, width: drawerIconSize }} />
               </ListItemIcon>
               <ListItemText>Manage users</ListItemText>
+            </ListItem>
+          )}
+          {authCtx.role === "admin" && (
+            <ListItem
+              button
+              selected={matchAdminLoc}
+              onClick={() => {
+                navigate("/adminlocview");
+              }}
+            >
+              <ListItemIcon>
+                <EditLocationIcon sx={{ height: drawerIconSize, width: drawerIconSize }} />
+              </ListItemIcon>
+              <ListItemText>Manage locations</ListItemText>
             </ListItem>
           )}
         </List>

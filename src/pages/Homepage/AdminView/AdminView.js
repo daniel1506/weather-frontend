@@ -22,6 +22,15 @@ function AdminView() {
         setUsers(result);
       }
     });
+  }, []);
+  useEffect(() => {
+    get(`${process.env.REACT_APP_BACKEND_BASE_URL}/user`).then((result) => {
+      console.log(result);
+      if (result.status != 200) {
+      } else {
+        setUsers(result);
+      }
+    });
   }, [usersModified]);
   let filteredUsers = users.filter((user) => {
     if (generalCtx.searchWord === "") return true;

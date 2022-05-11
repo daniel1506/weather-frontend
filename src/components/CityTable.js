@@ -226,7 +226,7 @@ export default function CityTable(props) {
   useEffect(() => {
     setRows(props.info);
     //console.log(props.info);
-  }, [generalCtx.eventEventModified, props.info]);
+  }, [generalCtx.eventModified, props.info]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";

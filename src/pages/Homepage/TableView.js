@@ -3,17 +3,16 @@ import CityTable from "../../components/CityTable";
 import get from "../../lib/get";
 import GeneralContext from "../../store/general-context";
 
-
 function TableView() {
   const [cityList, setCityList] = React.useState([]);
   const generalCtx = React.useContext(GeneralContext);
 
   useEffect(() => {
     console.log("Getting weather info");
-    get("https://weathering-with-me-g12.herokuapp.com/location").then((r) => { 
+    get("https://weathering-with-me-g12.herokuapp.com/location").then((r) => {
       setCityList(r);
     });
-  }, [generalCtx.eventEventModified]);
+  }, [generalCtx.eventModified]);
 
   return (
     <>
