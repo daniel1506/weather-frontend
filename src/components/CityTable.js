@@ -225,7 +225,7 @@ export default function CityTable(props) {
   const navigate = useNavigate();
   useEffect(() => {
     setRows(props.info);
-    //console.log(props.info);
+    console.log(props.info);
   }, [generalCtx.eventModified, props.info]);
 
   const handleRequestSort = (event, property) => {
@@ -300,7 +300,7 @@ export default function CityTable(props) {
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(props.info, getComparator(order, orderBy))
+              {stableSort(rows, getComparator(order, orderBy))
                 .filter((city) => {
                   return city.name.toLowerCase().includes(generalCtx.searchWord.toLowerCase());
                 })
@@ -342,13 +342,13 @@ export default function CityTable(props) {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.country}</TableCell>
-                      <TableCell align="right">{row.weather.temp_c}</TableCell>
-                      <TableCell align="right">{row.weather.wind_kph}</TableCell>
-                      <TableCell align="right">{row.weather.wind_dir}</TableCell>
-                      <TableCell align="right">{row.weather.humidity}</TableCell>
-                      <TableCell align="right">{row.weather.precip_mm}</TableCell>
-                      <TableCell align="right">{row.weather.vis_km}</TableCell>
+                      <TableCell align="right">{row.country?row.country:"N/A"}</TableCell>
+                      <TableCell align="right">{row.weather?row.weather.temp_c:"N/A"}</TableCell>
+                      <TableCell align="right">{row.weather?row.weather.wind_kph:"N/A"}</TableCell>
+                      <TableCell align="right">{row.weather?row.weather.wind_dir:"N/A"}</TableCell>
+                      <TableCell align="right">{row.weather?row.weather.humidity:"N/A"}</TableCell>
+                      <TableCell align="right">{row.weather?row.weather.precip_mm:"N/A"}</TableCell>
+                      <TableCell align="right">{row.weather?row.weather.vis_km:"N/A"}</TableCell>
                       {/* <TableCell align="right">
                                                 {props.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon sx={{ color: grey[500] }} />}
                                             </TableCell> */}
