@@ -11,7 +11,7 @@ function TableView() {
   useEffect(() => {
     console.log("Getting weather info");
     setLoading(true);
-    get("https://weathering-with-me-g12.herokuapp.com/location?=true").then((r) => {
+    get("https://weathering-with-me-g12.herokuapp.com/location?refresh=true").then((r) => {
       setLoading(false);
       setCityList(r);
     });
