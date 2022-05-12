@@ -28,14 +28,17 @@ import { useNavigate } from "react-router-dom";
 import put from "../lib/put";
 import deleteReq from "../lib/delete";
 
-
 function descendingComparator(a, b, orderBy) {
   if (orderBy != "name" && orderBy != "country") {
-    if (b["weather"][orderBy] < a["weather"][orderBy]) {
+    if (b["weather"] != null && a["weather"] != null) {
+      if (b["weather"][orderBy] < a["weather"][orderBy]) {
+        return -1;
+      }
+      if (b["weather"][orderBy] > a["weather"][orderBy]) {
+        return 1;
+      }
+    } else {
       return -1;
-    }
-    if (b["weather"][orderBy] > a["weather"][orderBy]) {
-      return 1;
     }
   } else {
     if (b[orderBy] < a[orderBy]) {
@@ -286,7 +289,7 @@ export default function CityTable(props) {
   };
 
   function likeCityHandler(city, isFavourite) {
-    if (!isFavourite) { 
+    if (!isFavourite) {
       put("https://weathering-with-me-g12.herokuapp.com/location/" + city + "/favourite").then(() => {
         generalCtx.handleEventModified();
       });
@@ -355,20 +358,23 @@ export default function CityTable(props) {
                         ) : (
                           <FavoriteIcon sx={{ color: grey[500] }} />
                         )} */}
-                        <IconButton aria-label="add to favorites" onClick={(e) => likeCityHandler(row.name, row.isFavourite)}>
+                        <IconButton
+                          aria-label="add to favorites"
+                          onClick={(e) => likeCityHandler(row.name, row.isFavourite)}
+                        >
                           {row.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon />}
                         </IconButton>
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.country?row.country:"N/A"}</TableCell>
-                      <TableCell align="right">{row.weather?row.weather.temp_c:"N/A"}</TableCell>
-                      <TableCell align="right">{row.weather?row.weather.wind_kph:"N/A"}</TableCell>
-                      <TableCell align="right">{row.weather?row.weather.wind_dir:"N/A"}</TableCell>
-                      <TableCell align="right">{row.weather?row.weather.humidity:"N/A"}</TableCell>
-                      <TableCell align="right">{row.weather?row.weather.precip_mm:"N/A"}</TableCell>
-                      <TableCell align="right">{row.weather?row.weather.vis_km:"N/A"}</TableCell>
+                      <TableCell align="right">{row.country ? row.country : "N/A"}</TableCell>
+                      <TableCell align="right">{row.weather ? row.weather.temp_c : "N/A"}</TableCell>
+                      <TableCell align="right">{row.weather ? row.weather.wind_kph : "N/A"}</TableCell>
+                      <TableCell align="right">{row.weather ? row.weather.wind_dir : "N/A"}</TableCell>
+                      <TableCell align="right">{row.weather ? row.weather.humidity : "N/A"}</TableCell>
+                      <TableCell align="right">{row.weather ? row.weather.precip_mm : "N/A"}</TableCell>
+                      <TableCell align="right">{row.weather ? row.weather.vis_km : "N/A"}</TableCell>
                     </TableRow>
                   );
                 })}

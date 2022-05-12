@@ -15,10 +15,16 @@ import post from "../../lib/post";
 import GeneralContext from "../../store/general-context";
 import SubmitButton from "../../components/SubmitButton";
 import { TextField, Box } from "@mui/material";
+import LocationMap from "../../components/LocationMap";
+import put from "../../lib/put";
+import deleteReq from "../../lib/delete";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { grey, pink, secondary } from "@mui/material/colors";
 
 function LocationView() {
   const { cityName } = useParams();
-  const [city, setCity] = useState([{}]);
+  const [city, setCity] = useState([]);
   const [commentlist, setCommentlist] = useState([{}]);
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -51,7 +57,7 @@ function LocationView() {
     });
     console.log("Getting comments");
     get("https://weathering-with-me-g12.herokuapp.com/location/" + cityName + "/comments").then((res) => {
-      console.log(res);
+      //console.log(res);
       setCommentlist(res);
     });
   }, [generalCtx.eventModified, cityName]);
@@ -62,20 +68,12 @@ function LocationView() {
       <div>
         <CityInfoTable city={city} />
         <br />
+        {city.length !== 0 ? <LocationMap city={city} /> : <></>}
         <br />
         <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
           &nbsp;&nbsp;&nbsp;Comment section:
         </Typography>
-        {commentlist ? <CommentTable comments={commentlist} /> : <></>}
-        {/* {commentlist?.map((comment) => {
-          return (
-            <div>
-              Author: {comment.author}
-              <br />
-              Comment: {comment.text}
-            </div>
-          );
-        })} */}
+        <CommentTable comments={commentlist} />
         <br />
         <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
           &nbsp;&nbsp;&nbsp;Enter comment:
@@ -86,7 +84,7 @@ function LocationView() {
               setComment(e.target.value);
             }}
           />
-          <SubmitButton onClick={addComment} loading={submitting} error={submitFailed}>
+          <SubmitButton onClick={(e) => addComment()} loading={submitting} error={submitFailed}>
             Submit
           </SubmitButton>
         </Box>
@@ -122,6 +120,20 @@ const EnhancedTableToolbar = (props) => {
 };
 
 function CityInfoTable(props) {
+  const generalCtx = React.useContext(GeneralContext);
+
+  function likeCityHandler(city, isFavourite) {
+    if (!isFavourite) {
+      put("https://weathering-with-me-g12.herokuapp.com/location/" + city + "/favourite").then(() => {
+        generalCtx.handleEventModified();
+      });
+    } else {
+      deleteReq("https://weathering-with-me-g12.herokuapp.com/location/" + city + "/favourite").then(() => {
+        generalCtx.handleEventModified();
+      });
+    }
+  }
+
   return (
     <>
       <EnhancedTableToolbar city={props.city} />
@@ -129,6 +141,7 @@ function CityInfoTable(props) {
         <Table sx={{ minWidth: 650 }} aria-label="City Info">
           <TableHead>
             <TableRow>
+              <TableCell> </TableCell>
               <TableCell>City Name</TableCell>
               <TableCell align="right">Country</TableCell>
               <TableCell align="right">Latitude</TableCell>
@@ -142,8 +155,13 @@ function CityInfoTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {[props.city].map((row) => (
-              <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+            {[props.city].map((row, index) => (
+              <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell>
+                  <IconButton aria-label="add to favorites" onClick={(e) => likeCityHandler(row.name, row.isFavourite)}>
+                    {row.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon />}
+                  </IconButton>
+                </TableCell>
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
@@ -176,8 +194,8 @@ function CommentTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.comments.map((row) => (
-            <TableRow key={row.author} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+          {props.comments.map((row, index) => (
+            <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {row.author}
               </TableCell>
