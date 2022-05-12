@@ -40,7 +40,7 @@ function LocationCard(props) {
   };
   const deleteLocaiton = () => {
     setDeleting(true);
-    deleteReq(`${process.env.REACT_APP_BACKEND_BASE_URL}/${props.name}`).then((result) => {
+    deleteReq(`${process.env.REACT_APP_BACKEND_BASE_URL}/location/${props.name}`).then((result) => {
       setDeleting(false);
       if (result.status != 200) {
         setDeleteFailed(true);
