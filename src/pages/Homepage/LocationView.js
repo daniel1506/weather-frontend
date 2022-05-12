@@ -73,16 +73,7 @@ function LocationView() {
         <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
           &nbsp;&nbsp;&nbsp;Comment section:
         </Typography>
-        {commentlist ? <CommentTable comments={commentlist} /> : <></>}
-        {/* {commentlist?.map((comment) => {
-          return (
-            <div>
-              Author: {comment.author}
-              <br />
-              Comment: {comment.text}
-            </div>
-          );
-        })} */}
+        <CommentTable comments={commentlist} />
         <br />
         <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
           &nbsp;&nbsp;&nbsp;Enter comment:
