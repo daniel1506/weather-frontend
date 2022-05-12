@@ -287,11 +287,11 @@ export default function CityTable(props) {
 
   function likeCityHandler(city, isFavourite) {
     if (!isFavourite) { 
-      put("https://weathering-with-me-g12.herokuapp.com/location/" + city.replace(/\s/g, '') + "/favourite").then(() => {
+      put("https://weathering-with-me-g12.herokuapp.com/location/" + city + "/favourite").then(() => {
         generalCtx.handleEventModified();
       });
     } else {
-      deleteReq("https://weathering-with-me-g12.herokuapp.com/location/" + city.replace(/\s/g, '') + "/favourite").then(() => {
+      deleteReq("https://weathering-with-me-g12.herokuapp.com/location/" + city + "/favourite").then(() => {
         generalCtx.handleEventModified();
       });
     }
