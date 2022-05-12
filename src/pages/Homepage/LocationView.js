@@ -24,7 +24,7 @@ import { grey, pink, secondary } from "@mui/material/colors";
 
 function LocationView() {
   const { cityName } = useParams();
-  const [city, setCity] = useState([{}]);
+  const [city, setCity] = useState([]);
   const [commentlist, setCommentlist] = useState([{}]);
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -57,7 +57,7 @@ function LocationView() {
     });
     console.log("Getting comments");
     get("https://weathering-with-me-g12.herokuapp.com/location/" + cityName + "/comments").then((res) => {
-      console.log(res);
+      //console.log(res);
       setCommentlist(res);
     });
   }, [generalCtx.eventModified, cityName]);
@@ -68,7 +68,7 @@ function LocationView() {
       <div>
         <CityInfoTable city={city} />
         <br />
-        {city ?<LocationMap city={city}/> : <></>}
+        {city.length !== 0 ? <LocationMap city={city} /> : <></>}
         <br />
         <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
           &nbsp;&nbsp;&nbsp;Comment section:
@@ -93,7 +93,7 @@ function LocationView() {
               setComment(e.target.value);
             }}
           />
-          <SubmitButton onClick={addComment} loading={submitting} error={submitFailed}>
+          <SubmitButton onClick={(e) => addComment()} loading={submitting} error={submitFailed}>
             Submit
           </SubmitButton>
         </Box>
@@ -128,12 +128,11 @@ const EnhancedTableToolbar = (props) => {
   );
 };
 
-
 function CityInfoTable(props) {
   const generalCtx = React.useContext(GeneralContext);
 
   function likeCityHandler(city, isFavourite) {
-    if (!isFavourite) { 
+    if (!isFavourite) {
       put("https://weathering-with-me-g12.herokuapp.com/location/" + city + "/favourite").then(() => {
         generalCtx.handleEventModified();
       });
@@ -165,12 +164,12 @@ function CityInfoTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {[props.city].map((row) => (
-              <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+            {[props.city].map((row, index) => (
+              <TableRow key={index} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                 <TableCell>
-                <IconButton aria-label="add to favorites" onClick={(e) => likeCityHandler(row.name, row.isFavourite)}>
-                          {row.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon />}
-                </IconButton>
+                  <IconButton aria-label="add to favorites" onClick={(e) => likeCityHandler(row.name, row.isFavourite)}>
+                    {row.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon />}
+                  </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {row.name}

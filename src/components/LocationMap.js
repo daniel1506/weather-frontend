@@ -1,11 +1,10 @@
 //@ts-check
-import { React, useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Container, Box } from "@mui/material";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import { MarkEmailReadTwoTone } from "@mui/icons-material";
 import get from "../lib/get";
 import { useNavigate } from "react-router-dom";
-
 
 function Map(props) {
   const ref = useRef();
@@ -51,9 +50,9 @@ function Marker(props) {
   }, []);
   useEffect(() => {
     let markerOnClickListener;
-    markerOnClickListener = marker?.addListener("click", () => {
-      navigate(`/location/${props.locationName}`);
-    });
+    // markerOnClickListener = marker?.addListener("click", () => {
+    //   navigate(`/location/${props.locationName}`);
+    // });
     return () => {
       if (marker && markerOnClickListener) {
         window.google.maps.event.removeListener(markerOnClickListener);
@@ -83,13 +82,14 @@ const mapContainerStyle = (theme) => ({
     height: "30%",
   },
 });
+
 function LocationMap(props) {
   const mapLoadingRender = (status) => {
     return <h1>{status}</h1>;
   };
   const [markersInfo, setMarkersInfo] = useState([{}]);
   useEffect(() => {
-    get("https://weathering-with-me-g12.herokuapp.com/location"+props.city.name)
+    get("https://weathering-with-me-g12.herokuapp.com/location/" + props.city.name)
       .then((result) => {
         console.log(result);
         setMarkersInfo(
@@ -101,7 +101,7 @@ function LocationMap(props) {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props.city]);
   return (
     <Container sx={rootContainerStyle}>
       <Box sx={mapContainerStyle}>
