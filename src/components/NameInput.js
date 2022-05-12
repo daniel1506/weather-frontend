@@ -14,7 +14,7 @@ function NameInput(props) {
   return (
     <TextField
       error={nameError}
-      helperText={nameError ? "Must be 8-20 characters" : ""}
+      helperText={nameError ? "Must be 4-20 characters" : ""}
       label={props.label ? props.label : "username"}
       className="info-input"
       onChange={(e) => {
