@@ -25,6 +25,10 @@ import { visuallyHidden } from "@mui/utils";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import GeneralContext from "../store/general-context";
 import { useNavigate } from "react-router-dom";
+import put from "../lib/put";
+import deleteReq from "../lib/delete";
+
+
 function descendingComparator(a, b, orderBy) {
   if (orderBy != "name" && orderBy != "country") {
     if (b["weather"][orderBy] < a["weather"][orderBy]) {
@@ -223,6 +227,7 @@ export default function CityTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const generalCtx = React.useContext(GeneralContext);
   const navigate = useNavigate();
+
   useEffect(() => {
     setRows(props.info);
     //console.log(props.info);
@@ -280,6 +285,18 @@ export default function CityTable(props) {
     setDense(event.target.checked);
   };
 
+  function likeCityHandler(city, isFavourite) {
+    if (!isFavourite) { 
+      put("https://weathering-with-me-g12.herokuapp.com/location/" + city.replace(/\s/g, '') + "/favourite").then(() => {
+        generalCtx.handleEventModified();
+      });
+    } else {
+      deleteReq("https://weathering-with-me-g12.herokuapp.com/location/" + city.replace(/\s/g, '') + "/favourite").then(() => {
+        generalCtx.handleEventModified();
+      });
+    }
+  }
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
@@ -333,11 +350,14 @@ export default function CityTable(props) {
                                                         'aria-labelledby': labelId,
                                                     }}
                                                 /> */}
-                        {props.isFavourite ? (
+                        {/* {props.isFavourite ? (
                           <FavoriteIcon sx={{ color: pink[500] }} />
                         ) : (
                           <FavoriteIcon sx={{ color: grey[500] }} />
-                        )}
+                        )} */}
+                        <IconButton aria-label="add to favorites" onClick={(e) => likeCityHandler(row.name, row.isFavourite)}>
+                          {row.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon />}
+                        </IconButton>
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
@@ -349,9 +369,6 @@ export default function CityTable(props) {
                       <TableCell align="right">{row.weather?row.weather.humidity:"N/A"}</TableCell>
                       <TableCell align="right">{row.weather?row.weather.precip_mm:"N/A"}</TableCell>
                       <TableCell align="right">{row.weather?row.weather.vis_km:"N/A"}</TableCell>
-                      {/* <TableCell align="right">
-                                                {props.isFavourite ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteIcon sx={{ color: grey[500] }} />}
-                                            </TableCell> */}
                     </TableRow>
                   );
                 })}
