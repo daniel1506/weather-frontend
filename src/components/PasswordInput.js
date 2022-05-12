@@ -9,7 +9,7 @@ function PasswordInput(props) {
   const [showPassword, setShowPassword] = useState(false);
   const validatePassword = (e) => {
     let password = e.target.value;
-    if (password.length < 8) {
+    if (password.length < 4 || password.length > 20) {
       setPasswordError(true);
     } else setPasswordError(false);
   };

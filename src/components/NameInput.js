@@ -5,7 +5,7 @@ function NameInput(props) {
   //provide validity checking for email input at register
   const validateName = (e) => {
     let name = e.target.value;
-    if (name.length >= 4) {
+    if (name.length >= 4 || name.length <= 20) {
       setNameError(false);
     } else {
       setNameError(true);
