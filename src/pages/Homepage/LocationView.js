@@ -1,10 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
+import { alpha } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Toolbar from "@mui/material/Toolbar";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import { useParams } from "react-router-dom";
 import get from "../../lib/get";
 import post from "../../lib/post";
 import GeneralContext from "../../store/general-context";
 import SubmitButton from "../../components/SubmitButton";
 import { TextField, Box } from "@mui/material";
+
 function LocationView() {
   const { cityName } = useParams();
   const [city, setCity] = useState([{}]);
@@ -13,6 +24,7 @@ function LocationView() {
   const [submitting, setSubmitting] = useState(false);
   const [submitFailed, setSubmitFailed] = useState(undefined);
   const generalCtx = React.useContext(GeneralContext);
+
   const addComment = () => {
     let data = { text: comment };
     setSubmitting(true);
@@ -30,6 +42,7 @@ function LocationView() {
         console.log(err);
       });
   };
+
   useEffect(() => {
     console.log("Getting city weather info");
     get("https://weathering-with-me-g12.herokuapp.com/location/" + cityName).then((res) => {
@@ -44,39 +57,136 @@ function LocationView() {
   }, [generalCtx.eventModified, cityName]);
 
   return (
-    <div>
-      LocationView, current cityName:{cityName}
+    <>
       <br />
-      cityName : {city?.name}
-      <br />
-      cityCountry : {city?.country}
-      <br />
-      cityLatitude : {city?.lat}
-      <br />
-      cityLongtitude : {city?.long}
-      <br />
-      <br />
-      Comment section:
-      {commentlist?.map((comment) => {
-        return (
-          <div>
-            Author: {comment.author}
-            <br />
-            Comment: {comment.text}
-          </div>
-        );
-      })}
-      <Box display="flex" flexDirection={{ xs: "column", md: "row" }} alignItems="center" gap="5px">
-        <TextField
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-        />
-        <SubmitButton onClick={addComment} loading={submitting} error={submitFailed}>
-          Submit
-        </SubmitButton>
-      </Box>
-    </div>
+      <div>
+        <CityInfoTable city={city} />
+        <br />
+        <br />
+        <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
+          &nbsp;&nbsp;&nbsp;Comment section:
+        </Typography>
+        {commentlist ? <CommentTable comments={commentlist} /> : <></>}
+        {/* {commentlist?.map((comment) => {
+          return (
+            <div>
+              Author: {comment.author}
+              <br />
+              Comment: {comment.text}
+            </div>
+          );
+        })} */}
+        <br />
+        <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
+          &nbsp;&nbsp;&nbsp;Enter comment:
+        </Typography>
+        <Box display="flex" flexDirection={{ xs: "column", md: "row" }} alignItems="center" gap="5px">
+          <TextField
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+          />
+          <SubmitButton onClick={addComment} loading={submitting} error={submitFailed}>
+            Submit
+          </SubmitButton>
+        </Box>
+      </div>
+    </>
+  );
+}
+
+const EnhancedTableToolbar = (props) => {
+  const { city } = props;
+
+  return (
+    <Toolbar
+      sx={{
+        pl: { sm: 2 },
+        pr: { xs: 1, sm: 1 },
+        ...(!city.name && {
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+        }),
+      }}
+    >
+      {!city.name ? (
+        <Typography sx={{ flex: "1 1 100%" }} color="inherit" variant="subtitle1" component="div">
+          Loading
+        </Typography>
+      ) : (
+        <Typography sx={{ flex: "1 1 100%" }} variant="h6" id="tableTitle" component="div">
+          LocationView: {city.name}
+        </Typography>
+      )}
+    </Toolbar>
+  );
+};
+
+function CityInfoTable(props) {
+  return (
+    <>
+      <EnhancedTableToolbar city={props.city} />
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="City Info">
+          <TableHead>
+            <TableRow>
+              <TableCell>City Name</TableCell>
+              <TableCell align="right">Country</TableCell>
+              <TableCell align="right">Latitude</TableCell>
+              <TableCell align="right">Longtitude</TableCell>
+              <TableCell align="right">Temperature&nbsp;(°C)</TableCell>
+              <TableCell align="right">Wind Speed&nbsp;(kph)</TableCell>
+              <TableCell align="right">Wind Direction</TableCell>
+              <TableCell align="right">Humidity&nbsp;(%)</TableCell>
+              <TableCell align="right">Precipitation&nbsp;(mm)</TableCell>
+              <TableCell align="right">Visibility&nbsp;(km)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {[props.city].map((row) => (
+              <TableRow key={row.name} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.country ? row.country : "N/A"}</TableCell>
+                <TableCell align="right">{row.country ? row.lat : "N/A"}</TableCell>
+                <TableCell align="right">{row.country ? row.long : "N/A"}</TableCell>
+                <TableCell align="right">{row.weather ? row.weather.temp_c : "N/A"}</TableCell>
+                <TableCell align="right">{row.weather ? row.weather.wind_kph : "N/A"}</TableCell>
+                <TableCell align="right">{row.weather ? row.weather.wind_dir : "N/A"}</TableCell>
+                <TableCell align="right">{row.weather ? row.weather.humidity : "N/A"}</TableCell>
+                <TableCell align="right">{row.weather ? row.weather.precip_mm : "N/A"}</TableCell>
+                <TableCell align="right">{row.weather ? row.weather.vis_km : "N/A"}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
+  );
+}
+
+function CommentTable(props) {
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="Comment table">
+        <TableHead>
+          <TableRow>
+            <TableCell>User</TableCell>
+            <TableCell align="left">Comment</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {props.comments.map((row) => (
+            <TableRow key={row.author} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+              <TableCell component="th" scope="row">
+                {row.author}
+              </TableCell>
+              <TableCell align="left">{row.text}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }
 
