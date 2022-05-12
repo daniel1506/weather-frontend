@@ -10,7 +10,6 @@ function deleteReq(url) {
     },
   })
     .then((response) => {
-      console.log(response.json());
       status = response.status;
       return response.json();
     })
